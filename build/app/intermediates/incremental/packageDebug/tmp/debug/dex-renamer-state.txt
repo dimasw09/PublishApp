@@ -1,0 +1,4 @@
+#Sat May 27 22:25:54 WIB 2023
+base.0=/media/kafs-garinganku/Kuliah/Semester 6/Pemrograman mobile/Praktikum/Belajar/flutter-news-app-mvvm/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
