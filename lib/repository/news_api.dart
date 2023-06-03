@@ -1,58 +1,51 @@
 import 'dart:convert';
-import '/model/article_model.dart';
-import '/repository/abstract_class_ropository.dart';
 import 'package:http/http.dart' as http;
+
+import '../model/article_model.dart';
+import '../repository/abstract_class_ropository.dart';
 import '../model/articles_list_model.dart';
 
 class NewsApi extends ClassRepository {
-  // put the API key here
-  var keyApi = "c887c172db40457a952a3caeb7e5ccab";
+  final String keyApi = "c887c172db40457a952a3caeb7e5ccab";
+  // final String baseUrl = "https://newsapi.org/v2/top-headlines";
+  final String baseUrl = "https://newsapi.org/v2/everything";
+  // https://newsapi.org/v2/everything
 
   @override
   Future<List<ArticleModel>> getAllNews() async {
+    final url =
+        "$baseUrl?q=tesla&from=2023-05-02&sortBy=publishedAt&apiKey=$keyApi";
     try {
-      var url =
-          ("https://newsapi.org/v2/top-headlines?country=us&apiKey=$keyApi");
-      http.Response response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        String data = response.body;
-        var jsonData = jsonDecode(data);
-        ArticlesListModel articles = ArticlesListModel.fromMap(jsonData);
-        List<ArticleModel> articlesListModel =
-            articles.articles!.map((e) => ArticleModel.fromMap(e)).toList();
-        return articlesListModel;
+        final jsonData = jsonDecode(response.body);
+        final articles = ArticlesListModel.fromMap(jsonData);
+        return articles.articles!.map((e) => ArticleModel.fromMap(e)).toList();
       } else {
-        // here shacked number status code
-        print("status code#Amer# = ${response.statusCode}");
+        print("status code: ${response.statusCode}");
       }
     } catch (e) {
       print(e);
     }
-    throw Exception("here Amer Exception code staus");
+    throw Exception("Failed to fetch news");
   }
 
   @override
-  Future<List<ArticleModel>> getCategory(String category) async {
+  Future<List<ArticleModel>> getCategory(String publishedAt) async {
+    final url =
+        "$baseUrl?q=tesla&from=2023-05-02&sortBy=$publishedAt&apiKey=$keyApi";
     try {
-      var url =
-          ("https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=$keyApi");
-      http.Response response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        String data = response.body;
-        var jsonData = jsonDecode(data);
-        ArticlesListModel articles = ArticlesListModel.fromMap(jsonData);
-        List<ArticleModel> articlesListModel =
-            articles.articles!.map((e) => ArticleModel.fromMap(e)).toList();
-        return articlesListModel;
+        final jsonData = jsonDecode(response.body);
+        final articles = ArticlesListModel.fromMap(jsonData);
+        return articles.articles!.map((e) => ArticleModel.fromMap(e)).toList();
       } else {
-        // here shacked number status code
-        // ignore: avoid_print
-        print("status code#Amer# = ${response.statusCode}");
+        print("status code: ${response.statusCode}");
       }
     } catch (e) {
-      // ignore: avoid_print
       print(e);
     }
-    throw Exception("here Amer Exception code status");
+    throw Exception("Failed to fetch news");
   }
 }

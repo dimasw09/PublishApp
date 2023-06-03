@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:mvvm_news_app/screens/general_screen.dart';
 import 'package:mvvm_news_app/screens/health_screen.dart';
 import 'package:mvvm_news_app/screens/science_screen.dart';
@@ -77,14 +80,63 @@ class TabsScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: Column(
           children: [
-            GeneralScreen(),
-            HealthScreen(),
-            TechnologyScreen(),
-            ScienceScreen(),
-            TopHeadlinesScreen(),
+            SearchBar(
+              onSearch: (query) {
+                // Panggil API dengan teks pencarian sebagai parameter
+                fetchSearchResults(query);
+              },
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  GeneralScreen(),
+                  HealthScreen(),
+                  TechnologyScreen(),
+                  ScienceScreen(),
+                  TopHeadlinesScreen(),
+                ],
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> fetchSearchResults(String query) async {
+    final url =
+        'https://your-api-endpoint.com/search?query=$query'; // Ganti dengan URL API pencarian Anda
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      // Lakukan sesuatu dengan data hasil pencarian
+      print('Search results: $data');
+    } else {
+      print('Failed to fetch search results');
+    }
+  }
+}
+
+class SearchBar extends StatelessWidget {
+  final ValueChanged<String> onSearch;
+
+  const SearchBar({Key? key, required this.onSearch}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        onChanged: onSearch,
+        decoration: InputDecoration(
+          hintText: 'Search',
+          prefixIcon: Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
         ),
       ),
     );
