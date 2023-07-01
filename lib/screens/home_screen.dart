@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:mvvm_news_app/screens/general_screen.dart';
-import 'package:mvvm_news_app/screens/health_screen.dart';
-import 'package:mvvm_news_app/screens/science_screen.dart';
-import 'package:mvvm_news_app/screens/technology_screen.dart';
-import 'package:mvvm_news_app/screens/top_headlines_screen.dart';
-import 'package:mvvm_news_app/screens/splash_screen.dart';
+import 'package:publishapp/screens/general_screen.dart';
+import 'package:publishapp/screens/health_screen.dart';
+import 'package:publishapp/screens/science_screen.dart';
+import 'package:publishapp/screens/technology_screen.dart';
+import 'package:publishapp/screens/top_headlines_screen.dart';
+import 'package:publishapp/screens/splash_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-package com.example.mvvm_news_app
+package com.example.publishapp
 
 import io.flutter.embedding.android.FlutterActivity
 

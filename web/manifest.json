@@ -1,6 +1,6 @@
 {
-    "name": "mvvm_news_app",
-    "short_name": "mvvm_news_app",
+    "name": "publishapp",
+    "short_name": "publishapp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
